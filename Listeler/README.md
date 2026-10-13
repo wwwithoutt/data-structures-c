@@ -5,26 +5,96 @@
 [![Memory: Valgrind Safe](https://img.shields.io/badge/Valgrind-0%20Leaks-brightgreen.svg)](https://valgrind.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-Низкоуровневая библиотека классических структур данных и алгоритмов на чистом Си (C99). Проект ориентирован на строгое соблюдение идиоматического стиля C, изолированное управление динамической памятью (`malloc`, `realloc`, `free`), отсутствие утечек памяти (zero leak tolerance) и детальную оценку асимптотической сложности.
+A robust, low-level library of fundamental data structures and algorithms implemented in ISO C99. Designed with an emphasis on idiomatic C design patterns, rigorous dynamic memory management (`malloc`, `realloc`, `free`), zero tolerance for memory leaks, and formal algorithmic complexity guarantees.
 
 ---
 
-## Особенности реализации
+## Key Highlights
 
-- **Zero Memory Leaks:** 100% покрытие тестов утилитой Valgrind и Clang AddressSanitizer (`ASan`).
-- **Строгая инкапсуляция:** Внутренние структуры скрыты (Opaque Pointers), манипуляция данными выполняется строго через публичный интерфейс API в `include/`.
-- **Защита от сбоев:** Проверка граничных условий, нулевых указателей (`NULL`-checks) и обработка ошибок выделения памяти на каждом уровне вызова.
-- **Strict Compiler Flags:** Сборка без предупреждений с флагами `-Wall -Wextra -Werror -pedantic -std=c99`.
+- **Zero Memory Leaks:** 100% verified leak-free test suite using Valgrind and LLVM AddressSanitizer (`ASan`).
+- **Encapsulation via Opaque Pointers:** Internal struct layouts remain private; consumers interact strictly through public APIs exposed in `include/`.
+- **Defensive Engineering:** Strict boundary checks, proactive `NULL`-pointer validations, and robust memory allocation failure handling across all operations.
+- **Strict Compiler Standards:** Compiles without warnings under `-Wall -Wextra -Werror -pedantic -std=c99`.
 
 ---
 
-## Архитектура проекта
+## Repository Architecture
 
 ```text
 .
-├── include/ds/        # Публичные заголовочные файлы (API структур)
-├── src/               # Реализации алгоритмов и логики работы с памятью
-│   └── lists/         # Модули связанных списков
-├── tests/             # Модульные и интеграционные тесты
-├── Makefile           # Правила сборки, линковки и санитайзеров
-└── README.md          # Документация проекта
+├── include/ds/        # Public API headers (module contracts)
+├── src/               # Implementation files & internal logic
+│   └── lists/         # Linked list implementations
+├── tests/             # Unit and integration test suites
+├── Makefile           # Build automation, sanitizers, and profiling targets
+└── README.md          # Project documentation
+```
+
+---
+
+## Implemented Modules & Complexity Analysis
+
+### Linked Lists
+
+| Data Structure | Access | Search | Insertion (Head) | Insertion (Tail) | Deletion | Space Complexity |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Singly Linked List** | O(n) | O(n) | O(1) | O(1)* | O(n) | O(n) |
+| **Doubly Linked List** | O(n) | O(n) | O(1) | O(1) | O(1)** | O(n) |
+| **Circular Linked List** | O(n) | O(n) | O(1) | O(1) | O(n) | O(n) |
+
+> `*` — Requires maintaining an explicit `tail` pointer.  
+> `**` — Assumes a direct pointer reference to the target node is provided.
+
+---
+
+## Build & Test
+
+### Prerequisites
+- Compiler: `gcc` (>= 9.0) or `clang` (>= 11.0)
+- Build System: `make`
+- Profiling & Memory Analysis: `valgrind` (Linux) or `AddressSanitizer` (macOS / Linux)
+
+### 1. Compile Binaries & Test Suites
+```bash
+# Build all modules and test executables in standard debug mode
+make all
+
+# Build with AddressSanitizer (ASan) and UndefinedBehaviorSanitizer (UBSan) enabled
+make sanitize
+```
+
+### 2. Execute Tests
+```bash
+make test
+```
+
+### 3. Run Memory Leak Audits (Valgrind)
+```bash
+make memcheck
+```
+
+---
+
+## Roadmap
+
+- [x] **Linear Lists:**
+  - [x] Singly Linked List (`singly_linked_list`)
+  - [x] Doubly Linked List (`doubly_linked_list`)
+  - [x] Circular Linked List (`circular_linked_list`)
+- [ ] **Sequential Abstract Data Types:**
+  - [ ] Array-based & Linked Stacks (`stack`)
+  - [ ] Queues (FIFO) and Double-Ended Queues (`queue`, `deque`)
+  - [ ] Priority Queue / Binary Heap (`binary_heap`)
+- [ ] **Tree Structures:**
+  - [ ] Binary Search Tree (`BST`)
+  - [ ] Self-Balancing AVL Tree (`AVL_tree`)
+  - [ ] Red-Black Tree (`Red-Black_tree`)
+- [ ] **Associative Arrays & Graphs:**
+  - [ ] Hash Map with collision resolution (`hash_map`)
+  - [ ] Graph representations (Adjacency List / Matrix) with BFS and DFS traversals
+
+---
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
