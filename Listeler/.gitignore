@@ -1,0 +1,60 @@
+# ==========================================
+# C Artifacts & Compiled Binaries
+# ==========================================
+*.o
+*.obj
+*.so
+*.dylib
+*.dll
+*.a
+*.lib
+*.out
+*.app
+bin/
+build/
+dist/
+
+# ==========================================
+# Debug & Profiling Symbols
+# ==========================================
+*.dSYM/
+*.su
+*.idb
+*.pdb
+gmon.out
+core
+core.*
+vgcore.*
+
+# ==========================================
+# macOS System Files
+# ==========================================
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# ==========================================
+# Linux System Files
+# ==========================================
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# ==========================================
+# IDE & Editor Configurations
+# ==========================================
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.idea/
+*.swp
+*.swo
+*.swn
+.clangd/
+.cache/
+compile_commands.json
