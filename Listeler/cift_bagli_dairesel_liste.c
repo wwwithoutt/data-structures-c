@@ -1,14 +1,13 @@
 #include <stdio.h>
 #include<stdlib.h>
-
+/*================ Liste olusturuyoruz ================*/
 struct node 
 { 
     int data; 
     struct node * next; 
     struct node * prev; 
 }; 
-
-
+/*================ Listeler Yazdir ================*/
 void Listeler_Yaz(struct node * GelenHead)
 { 
     if(GelenHead == NULL)
@@ -25,7 +24,7 @@ void Listeler_Yaz(struct node * GelenHead)
 
     }while(temp != GelenHead);
 }
-
+/*================ Basina Ekleme ================*/
 struct node * basinaEkle(struct node * GelenHead, int gelenData)
 { 
     struct node * YeniDugum = malloc(sizeof(struct node));
@@ -50,6 +49,7 @@ struct node * basinaEkle(struct node * GelenHead, int gelenData)
 
 
 }
+/*================ Sona Ekleme ================*/
 struct node * sonaEkleme(struct node * GelenHead, int gelenData)
 { 
     struct node * YeniDugum = malloc(sizeof(struct node));
@@ -65,6 +65,7 @@ struct node * sonaEkleme(struct node * GelenHead, int gelenData)
     return GelenHead; 
 
 }
+/*================ Bastan Sil  ================*/
 struct node * BastanSil(struct node * GelenHead)
 { 
     if(GelenHead ==  NULL)
@@ -87,8 +88,28 @@ struct node * BastanSil(struct node * GelenHead)
 
     }
 }
+/*================ SondanSilme ================*/
+struct node * sondanSilme(struct node * GelenHead)
+{ 
+        if(GelenHead ==  NULL)
+    { 
+        printf("Liste zaten bos! \n");
+        return NULL;
+    }
+    else if(GelenHead->next == GelenHead)
+    { 
+        free(GelenHead); 
+        return NULL;
+    }else{ 
+        struct node * silinecek = GelenHead->prev; 
+        struct node * yeniSon = silinecek->prev;
+        yeniSon->next = GelenHead; 
+        GelenHead->prev = yeniSon;        
+        return GelenHead; 
 
-
+    }
+}
+/*================ Aranan Elemani Sil ================*/
 struct node * arananSil(struct node * GelenHead, int arananSayi)
 {
     if(GelenHead == NULL)
@@ -135,28 +156,6 @@ struct node * arananSil(struct node * GelenHead, int arananSayi)
 
     free(silinecek);
     return GelenHead;
-}
-
-
-struct node * sondanSilme(struct node * GelenHead)
-{ 
-        if(GelenHead ==  NULL)
-    { 
-        printf("Liste zaten bos! \n");
-        return NULL;
-    }
-    else if(GelenHead->next == GelenHead)
-    { 
-        free(GelenHead); 
-        return NULL;
-    }else{ 
-        struct node * silinecek = GelenHead->prev; 
-        struct node * yeniSon = silinecek->prev;
-        yeniSon->next = GelenHead; 
-        GelenHead->prev = yeniSon;        
-        return GelenHead; 
-
-    }
 }
 
 int main()
